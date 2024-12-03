@@ -4,24 +4,26 @@ import java.util.List;
 public class BankManager {
     List<BankAccount> accounts = new ArrayList<>();
 
-    // Create a new account
-    public void createAccount(BankAccount account) {
-        accounts.add(account);
-        System.out.println("Account created successfully for " + account.accountHolderName);
+    public void createSavingsAccount(int accountNumber, String accountHolderName, double balance, double interestRate) {
+        accounts.add(new SavingsAccount(accountNumber, accountHolderName, balance, interestRate));
+        System.out.println("Savings Account created for " + accountHolderName);
     }
 
-    // Find an account by account number
+    public void createCurrentAccount(int accountNumber, String accountHolderName, double balance, double overdraftLimit) {
+        accounts.add(new CurrentAccount(accountNumber, accountHolderName, balance, overdraftLimit));
+        System.out.println("Current Account created for " + accountHolderName);
+    }
+
     public BankAccount findAccount(int accountNumber) {
         for (BankAccount account : accounts) {
             if (account.accountNumber == accountNumber) {
                 return account;
             }
         }
-        System.out.println("Account with number " + accountNumber + " not found.");
+        System.out.println("Account not found!");
         return null;
     }
 
-    // Handle deposit for a specific account
     public void handleDeposit(int accountNumber, double amount) {
         BankAccount account = findAccount(accountNumber);
         if (account != null) {
@@ -29,7 +31,6 @@ public class BankManager {
         }
     }
 
-    // Handle withdrawal for a specific account
     public void handleWithdrawal(int accountNumber, double amount) {
         BankAccount account = findAccount(accountNumber);
         if (account != null) {
@@ -37,21 +38,22 @@ public class BankManager {
         }
     }
 
-    // Display details of all accounts
+    public void resetSavingsAccountWithdrawals(int accountNumber) {
+        BankAccount account = findAccount(accountNumber);
+        if (account instanceof SavingsAccount) {
+            ((SavingsAccount) account).resetWithdrawals();
+        } else {
+            System.out.println("Reset feature is only available for Savings Accounts.");
+        }
+    }
+
     public void displayAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
         } else {
-            System.out.println("All Bank Accounts:");
             for (BankAccount account : accounts) {
                 account.displayDetails();
             }
         }
     }
 }
-
-
-
-
-
-
