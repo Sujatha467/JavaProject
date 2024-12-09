@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class Maingut {
     public static void main(String[] args) {
         BankManager manager = new BankManager();
         Scanner scanner = new Scanner(System.in);
